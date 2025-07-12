@@ -2,8 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Income = require("../models/Income");
 const Expense = require("../models/Expense");
-const {protect} = require ("../middleware/authMiddleware.js");// ensure user is authenticated
-
+const { protect } = require("../middleware/authMiddleware.js");
 
 router.get("/", protect, async (req, res) => {
   const userId = req.user.id;
@@ -13,8 +12,8 @@ router.get("/", protect, async (req, res) => {
     const expense = await Expense.find({ userId });
 
     const transactions = [
-      ...income.map(txn => ({ ...txn.toObject(), type: "income" })),
-      ...expense.map(txn => ({ ...txn.toObject(), type: "expense" })),
+      ...income.map((txn) => ({ ...txn.toObject(), type: "income" })),
+      ...expense.map((txn) => ({ ...txn.toObject(), type: "expense" })),
     ].sort((a, b) => new Date(b.date) - new Date(a.date));
 
     res.json({ transactions });

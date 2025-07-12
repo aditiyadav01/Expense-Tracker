@@ -13,6 +13,7 @@ import Income from "./pages/Dashboard/Income";
 import RecentTransactionsPage from "./pages/Dashboard/RecentTransactionsPage "; // new
 import UserProvider from "./context/UserContext";
 import { Toaster } from "react-hot-toast";
+import Budget from "./pages/Dashboard/Budget";
 
 const App = () => {
   return (
@@ -31,7 +32,7 @@ const App = () => {
               exact
               element={<RecentTransactionsPage />}
             />{" "}
-            {/* new */}
+            <Route path="/budget" exact element={<Budget />} />
           </Routes>
         </Router>
       </div>
