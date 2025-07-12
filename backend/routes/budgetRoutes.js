@@ -10,7 +10,7 @@ router.get("/", protect, async (req, res) => {
   try {
     const user = req.user;
     const now = moment();
-    const month = req.query.month || now.format("YYYY-MM");
+    const month = req.query.month || moment.format("YYYY-MM");
 
     const budgets =
       user.budgets instanceof Map
@@ -23,7 +23,7 @@ router.get("/", protect, async (req, res) => {
     const history = Object.entries(budgets).map(([m, b]) => ({
       month: moment(m, "YYYY-MM").format("MMMM YYYY"),
       budget: b,
-      spent: 0, // You can replace with actual expense sum
+      spent: 0,
       remaining: b - 0,
     }));
 
@@ -44,7 +44,7 @@ router.put("/", protect, async (req, res) => {
     }
 
     const user = req.user;
-    const currentMonth = moment().format("YYYY-MM");
+    const currentMonth = req.query.month || moment().format("YYYY-MM");
 
     // Update or create the entry
     if (user.budgets instanceof Map) {
