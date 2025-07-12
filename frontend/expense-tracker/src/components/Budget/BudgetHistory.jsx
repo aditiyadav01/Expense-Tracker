@@ -3,6 +3,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import Spinner from "../../components/Loader/Spinner";
 import toast from "react-hot-toast";
+import { API_PATHS } from "../../utils/apiPaths";
 
 const BudgetHistory = () => {
   const [history, setHistory] = useState([]);
@@ -10,7 +11,7 @@ const BudgetHistory = () => {
 
   const fetchHistory = async () => {
     try {
-      const res = await axiosInstance.get("/api/v1/budget/history", {
+      const res = await axiosInstance.get(API_PATHS.BUDGET.GET_HISTORY, {
         withCredentials: true,
       });
       setHistory(res.data.history || []);

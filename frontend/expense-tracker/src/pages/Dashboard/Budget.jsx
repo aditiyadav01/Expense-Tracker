@@ -3,6 +3,7 @@ import axiosInstance from "../../utils/axiosInstance";
 import DashboardLayout from "../../components/layouts/DashboardLayout";
 import toast from "react-hot-toast";
 import Spinner from "../../components/Loader/Spinner";
+import { API_PATHS } from "../../utils/apiPaths";
 
 const Budget = () => {
   const [budget, setBudget] = useState(0);
@@ -23,7 +24,7 @@ const Budget = () => {
   const fetchBudget = async () => {
     try {
       const res = await axiosInstance.get(
-        `/api/v1/budget?month=${selectedMonth}`,
+        API_PATHS.BUDGET.GET_BUDGET(selectedMonth),
         {
           withCredentials: true,
         }
@@ -37,7 +38,7 @@ const Budget = () => {
 
   const fetchTransactions = async () => {
     try {
-      const res = await axiosInstance.get("/api/v1/transactions", {
+      const res = await axiosInstance.get(API_PATHS.TRANSACTION.GET_ALL, {
         withCredentials: true,
       });
       setTransactions(res.data.transactions || []);
@@ -49,7 +50,7 @@ const Budget = () => {
 
   const fetchHistory = async () => {
     try {
-      const res = await axiosInstance.get("/api/v1/budget/history", {
+      const res = await axiosInstance.get(API_PATHS.BUDGET.GET_HISTORY, {
         withCredentials: true,
       });
 
@@ -88,14 +89,14 @@ const Budget = () => {
 
     try {
       await axiosInstance.put(
-        `/api/v1/budget?month=${selectedMonth}`,
+        API_PATHS.BUDGET.UPDATE_BUDGET(selectedMonth),
         { budget: Number(inputBudget) },
         { withCredentials: true }
       );
       toast.success("Budget updated!");
       setBudget(Number(inputBudget));
       setInputBudget("");
-      fetchHistory(); // update history after update
+      fetchHistory();
     } catch (err) {
       toast.error("Error updating budget");
       console.error("Update Budget Error:", err.response?.data || err.message);
