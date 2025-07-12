@@ -1,3 +1,4 @@
+import { BiDollarCircle } from "react-icons/bi";
 import {
   LuLayoutDashboard,
   LuHandCoins,
